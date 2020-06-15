@@ -4,13 +4,31 @@ import HeroImage from "./elements/HeroImage";
 import Spinner from "./elements/Spinner";
 import Grid from "./elements/Grid";
 import MovieThumb from "./elements/MovieThumb";
+import LoadMoreBtn from "../components/elements/LoadMoreBtn";
 import NoImage from "./images/no_image.jpg";
-
-import { BACKDROP_SIZE, IMAGE_BASE_URL, POSTER_SIZE } from "../config";
+import {
+  POPULAR_BASE_URL,
+  SEARCH_BASE_URL,
+  POSTER_SIZE,
+  BACKDROP_SIZE,
+  IMAGE_BASE_URL,
+} from "../config";
 
 function Home() {
   const [{ state, loading, error }, fetchMovies] = useHomeFetch();
   const [searchTerm, setSearchTerm] = useState("");
+
+  const loadMoreMovies = () => {
+    const searchEndpoint = `${SEARCH_BASE_URL}${searchTerm}&page=${
+      state.currentPage + 1
+    }`;
+    const popularEndpoint = `${POPULAR_BASE_URL}&page=${state.currentPage + 1}`;
+
+    const endpoint = searchTerm ? searchEndpoint : popularEndpoint;
+
+    fetchMovies(endpoint);
+  };
+
   console.log(state);
 
   if (error) return <div>Ooopssss</div>;
@@ -39,6 +57,9 @@ function Home() {
         ))}
       </Grid>
       {loading && <Spinner />}
+      {state.currentPage < state.totalPages && !loading && (
+        <LoadMoreBtn text="Load More" callback={loadMoreMovies} />
+      )}
     </div>
   );
 }
