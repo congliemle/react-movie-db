@@ -22,6 +22,7 @@ export const useMovieFetch = (movieId) => {
 
       setState({
         ...result,
+        actors: creditsResult.cast,
         directors,
       });
     } catch (error) {
