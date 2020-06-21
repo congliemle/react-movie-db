@@ -18,6 +18,7 @@ Technology and tools in use:
 - [ReactJS](https://reactjs.org)
 - [React Router](https://reacttraining.com/react-router)
 - [Create react app](https://create-react-app.dev)
+- [Styled Component](https://styled-components.com)
 
 ## Setup
 
